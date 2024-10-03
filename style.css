@@ -15,21 +15,56 @@ body{
 }
 
 .searchMain{
-    background-color: brown;
+    background-color: lime;
+    
     margin-top: 10%;
     margin-left: 30%;
-    border-radius: 50px;
-    height: 300px;
+    /* border-radius: 50px; */
+    height:200%;
+    /* padding-top: 1%; */
+    /* padding-bottom: 1%; */
+    width: 40%;
+    text-align: left;
+    /* display: flex; */
+}
+
+.searchSub{
+    background-color: black;
+    margin-top: 0%;
+    /* margin-left: 30%; */
+    /* border-radius: 50px; */
+    height:99%;
     padding-top: 1%;
     padding-bottom: 1%;
-    width: 40%;
-    text-align: center;
-    display: flex;
+    width: 99%;
+    text-align: left;
+    /* display: flex; */
 
-    
+
+
     p{
-        font-size: 10px;
-        color: aqua;
+        padding-top: 0%;
+        padding-bottom: 0%;
+        /* margin-top: 0%; */
+
+
+        margin-left: 0%;
+        font-size: 120%;
+        color: lime;
+        margin-left: 5%;
+
         
     }
+
+    input{ 
+        padding-top: 0%;
+        padding-bottom: 0%;
+        width: 60%;
+        height: 30%;       
+        background-color: transparent;
+        border-color: lime;
+        color: lime;
+        margin-left: 5%;
+    }
 }
+
