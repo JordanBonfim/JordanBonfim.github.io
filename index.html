@@ -4,7 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Galeria APOD da NASA</title>
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    color: #333;
+    }
+    
+    .container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 700px; /* Limitar largura do container /
+    width: 90%; / Responsividade */
+    }
+    h1 {
+        margin-bottom: 20px;
+        color: #555;
+        }
+        
+        #mediaDisplayImage,
+        #mediaDisplayVideo {
+        max-width: 100%;
+        height: 400px; /* Altura fixa para ambos para manter layout consistente /
+        object-fit: contain; / Para imagens, ajusta para caber sem cortar */
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Esconder por padrão, JS vai controlar a visibilidade */
+        #mediaDisplayImage[src=""], #mediaDisplayVideo[src=""] {
+        display: none;
+        }
+        
+        #mediaTitle {
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-bottom: 10px;
+        }
+        
+        #mediaExplanation {
+        font-size: 0.9em;
+        margin-bottom: 15px;
+        text-align: justify;
+        }
+        
+        #mediaCopyright {
+        font-size: 0.8em;
+        color: #777;
+        margin-bottom: 20px;
+        }
+        
+        button {
+        background-color: #007bff;
+        color: white;
+        padding: 12px 25px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+        background-color: #0056b3;
+        }
+        
+        button:disabled {
+        background-color: #cccccc;
+        cursor: not-allowed;
+        }
+
+    </style>
 </head>
 <body>
     <div class="container">
