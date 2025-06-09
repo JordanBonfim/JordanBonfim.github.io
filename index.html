@@ -1,27 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Galeria APOD da NASA</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    
-    <div class="header">
-
-
+    <div class="container">
+        <h1>Astronomy Picture of the Day (APOD) da NASA</h1>
+        <img id="mediaDisplayImage" src="https://via.placeholder.com/600x400?text=Carregando+APOD..." alt="Imagem APOD">
         
+        <iframe id="mediaDisplayVideo" width="600" height="400" frameborder="0" allowfullscreen
+            src="" style="display:none;">
+        </iframe>
 
-    </div style="yellow">
-    
-    
-    <div class="searchMain">    
-        <div class="searchSub">
-            <p>Link:</p>
-            <input type="text" id="LinkInput" name="linkInput" placeholder="Your Link Here">
-            <div></div>
-        </div>
+        <p id="mediaTitle"></p>
+        <p id="mediaExplanation"></p>
+        <p id="mediaCopyright"></p>
+
+        <button id="newMediaBtn">Ver Nova APOD</button>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
