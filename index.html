@@ -1,12 +1,22 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mana & Bullets</title>
+    
+    <!-- Fontes do Google para um visual autêntico de jogo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --mana-color: #9d7aff;
+            --mana-glow: rgba(157, 122, 255, 0.4);
+            --bg-dark: #0a0812;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -19,86 +29,180 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            font-family: Arial, sans-serif;
+            font-family: 'Rajdhani', sans-serif;
             color: white;
-            background: radial-gradient(circle at center, #252044 0%, #11101e 45%, #080810 100%);
+            background-color: var(--bg-dark);
+            /* Fundo com grid sutil e névoa de mana central */
+            background-image: 
+                radial-gradient(circle at 50% 40%, #25164d 0%, var(--bg-dark) 60%),
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 100% 100%, 40px 40px, 40px 40px;
+            background-position: center;
+        }
+
+        /* Efeito de scanline sutil (opcional para estilo retro/indie) */
+        body::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 10;
         }
 
         .container {
             text-align: center;
             position: relative;
             z-index: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .subtitle {
-            color: #a99adf;
-            letter-spacing: 8px;
-            font-size: 13px;
-            margin-bottom: 20px;
+            color: #b5a8db;
+            letter-spacing: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            opacity: 0.8;
         }
 
         h1 {
-            font-size: clamp(55px, 10vw, 110px);
+            font-family: 'Cinzel', serif;
+            font-size: clamp(45px, 8vw, 90px);
             font-weight: 900;
-            letter-spacing: -4px;
-            line-height: 1;
-            text-shadow: 0 0 30px #8055ff88;
+            letter-spacing: -2px;
+            line-height: 1.1;
+            text-transform: uppercase;
+            /* Texto com gradiente metálico/mágico */
+            background: linear-gradient(to bottom, #ffffff 30%, #b399ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 4px 15px rgba(128, 85, 255, 0.4));
+            margin-bottom: 15px;
         }
 
         h1 span {
-            color: #a47aff;
+            font-size: 0.7em;
+            color: var(--mana-color);
+            -webkit-text-fill-color: var(--mana-color);
+            vertical-align: middle;
         }
 
         .description {
-            margin-top: 20px;
-            color: #aaa5bd;
-            font-size: 16px;
-            letter-spacing: 2px;
+            color: #8c85a6;
+            font-size: 18px;
+            letter-spacing: 3px;
+            font-weight: 500;
         }
 
-        /* Character animation */
+        /* Animação e estilo do Personagem */
+        .character-wrapper {
+            position: relative;
+            margin: 40px 0;
+        }
+
+        .character-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 15px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 50%;
+            filter: blur(4px);
+            z-index: -1;
+            animation: shadow-pulse 2s ease-in-out infinite;
+        }
+
         .character {
-            width: 180px;
-            height: 180px;
+            width: 160px;
+            height: 160px;
             object-fit: contain;
-            image-rendering: pixelated;
-            margin: 20px auto 0;
+            image-rendering: pixelated; /* Mantém o aspecto pixel art */
             display: block;
-            filter: drop-shadow(0 0 20px #8055ff88);
+            filter: drop-shadow(0 0 15px var(--mana-glow));
             animation: float 2s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-12px); }
         }
 
-        .play-button {
-            margin-top: 35px;
-            padding: 20px 75px;
-            border: 2px solid #a47aff;
-            background: linear-gradient(135deg, #7950d8, #45258e);
-            color: white;
-            font-size: 20px;
-            font-weight: bold;
-            letter-spacing: 4px;
+        @keyframes shadow-pulse {
+            0%, 100% { transform: translateX(-50%) scale(1); opacity: 0.6; }
+            50% { transform: translateX(-50%) scale(0.8); opacity: 0.3; }
+        }
+
+        /* Agrupamento e Hierarquia dos Botões */
+        .action-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .btn {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 3px;
             cursor: pointer;
-            transition: 0.25s;
-            box-shadow: 0 0 25px #8055ff55;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
         }
 
-        .play-button:hover {
-            transform: scale(1.08);
-            background: linear-gradient(135deg, #a47aff, #6840bd);
-            box-shadow: 0 0 45px #8055ffaa;
+        /* Botão Primário (V0.2) */
+        .btn-primary {
+            padding: 16px 40px;
+            background: var(--mana-color);
+            color: #0a0812;
+            border: 2px solid var(--mana-color);
+            box-shadow: 0 0 20px rgba(157, 122, 255, 0.3);
+            clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+        }
+
+        .btn-primary:hover {
+            background: #b59bff;
+            border-color: #b59bff;
+            box-shadow: 0 0 35px rgba(157, 122, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        /* Botão Secundário (V0.1) */
+        .btn-secondary {
+            padding: 14px 30px;
+            background: transparent;
+            color: #a59bca;
+            border: 1px solid rgba(165, 155, 202, 0.3);
+            font-size: 15px;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--mana-color);
+            color: white;
+            background: rgba(157, 122, 255, 0.1);
         }
 
         .footer {
             position: absolute;
-            bottom: 25px;
-            color: #57536a;
-            font-size: 12px;
+            bottom: 20px;
+            color: #49455c;
+            font-size: 13px;
             letter-spacing: 2px;
+            font-weight: 500;
+            z-index: 1;
         }
     </style>
 </head>
@@ -109,16 +213,20 @@
 
         <h1>MANA <span>&</span><br>BULLETS</h1>
 
-        <p class="description">
-            SURVIVE THE WAVES. MASTER THE MAGIC.
-        </p>
+        <p class="description">SURVIVE THE WAVES. MASTER THE MAGIC.</p>
 
-        <img id="character" class="character" src="sprites/IDLE2.png" alt="Main Character">
+        <div class="character-wrapper">
+            <img id="character" class="character" src="sprites/IDLE2.png" alt="Main Character">
+        </div>
 
-        <button class="play-button"
-            onclick="window.location.href='Mana%26Bullets.html'">
-            ▶ JOGAR
-        </button>
+        <div class="action-group">
+            <button class="btn btn-primary" onclick="window.location.href='v0.2/Mana%26Bullets.html'">
+                ▶ Jogar V0.2
+            </button>
+            <button class="btn btn-secondary" onclick="window.location.href='v0.1/Mana%26Bullets.html'">
+                Versão V0.1
+            </button>
+        </div>
     </main>
 
     <footer class="footer">
@@ -126,6 +234,7 @@
     </footer>
 
     <script>
+        // Array de frames do personagem
         const frames = [
             "sprites/IDLE2.png",
             "sprites/IDLE3.png",
@@ -136,9 +245,15 @@
         ];
 
         const character = document.getElementById("character");
-
         let currentFrame = 0;
 
+        // Pré-carregamento simples de imagens para evitar "piscadas" no primeiro loop
+        frames.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+
+        // Loop de animação
         setInterval(() => {
             currentFrame = (currentFrame + 1) % frames.length;
             character.src = frames[currentFrame];
